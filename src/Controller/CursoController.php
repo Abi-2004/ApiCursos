@@ -71,7 +71,7 @@ class CursoController extends AbstractController
 
         $cursoRepository->add($curso);
 
-        $data = $serializer->serialize($curso, 'json');
+        $data = $serializer->serialize($curso, 'json', ['groups' => 'curso:read']);
 
         return new JsonResponse($data, 201, [], true);
     }
@@ -110,7 +110,7 @@ class CursoController extends AbstractController
     public function getCursos(CursoRepository $cursoRepository, SerializerInterface $serializer): JsonResponse
     {
         $cursos = $cursoRepository->findAll();
-        $data = $serializer->serialize($cursos, 'json');
+        $data = $serializer->serialize($cursos, 'json', ['groups' => 'curso:read']);
         return new JsonResponse($data, 200, [], true);
     }
 
