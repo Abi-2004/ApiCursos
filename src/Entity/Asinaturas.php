@@ -6,6 +6,7 @@ use App\Repository\AsinaturasRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 #[ORM\Entity(repositoryClass: AsinaturasRepository::class)]
 class Asinaturas
 {
