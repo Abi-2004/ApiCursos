@@ -25,7 +25,7 @@ class Asinaturas
 
     #[ORM\ManyToOne(inversedBy: 'asignaturas')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['asignatura:read', 'asignatura:write'])]
+    #[Groups(['asignatura:read', 'asignatura:write', 'curso:read'])]
     private ?Curso $curso = null;
 
     #[Groups(['asignatura:read'])]
@@ -58,7 +58,7 @@ class Asinaturas
         return $this;
     }
 
-    #[Groups(['asignatura:read'])]
+    #[Groups(['asignatura:read', 'curso:read'])]
     public function getCurso(): ?Curso
     {
         return $this->curso;
