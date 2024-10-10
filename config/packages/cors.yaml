@@ -1,5 +1,5 @@
 cors:
     paths: '^/curso/'
-    allow_origin: ['http://44.208.202.227:8100']
+    allow_origin: ['*']
     allow_methods: ['GET', 'POST', 'DELETE', 'OPTIONS']
     allow_headers: ['Content-Type', 'Authorization']
