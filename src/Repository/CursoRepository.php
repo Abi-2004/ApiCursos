@@ -22,6 +22,16 @@ class CursoRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function getCurso(int $id): ?Curso
+    {
+        return $this->find($id);
+    }
+
+    public function getCursos(): array
+    {
+        return $this->findAll();
+    }
+
     //    /**
     //     * @return Curso[] Returns an array of Curso objects
     //     */

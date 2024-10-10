@@ -109,7 +109,7 @@ class CursoController extends AbstractController
     #[Route('/curso/get-cursos', name: 'get_cursos', methods: ['GET'])]
     public function getCursos(CursoRepository $cursoRepository, SerializerInterface $serializer): JsonResponse
     {
-        $cursos = $cursoRepository->findAll();
+        $cursos = $cursoRepository->getCursos();
     
         // Ensure $cursos contains valid data
         if (!$cursos) {
