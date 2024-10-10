@@ -6,34 +6,35 @@ use App\Repository\AsinaturasRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: AsinaturasRepository::class)]
 class Asinaturas
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['asinaturas:read', 'asinaturas:write'])]
+    #[Groups(['asignatura:read', 'asignatura:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['asinaturas:read', 'asinaturas:write'])]
+    #[Groups(['asignatura:read', 'asignatura:write'])]
     private ?string $nombre = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Groups(['asinaturas:read', 'asinaturas:write'])]
-    private ?int $horas = null;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['asignatura:read', 'asignatura:write'])]
+    private ?int $horas = null; // Add horas property
 
-    #[ORM\Column]
-    #[Groups(['asinaturas:read'])]
-    private ?int $cursoId = null;
+    #[ORM\ManyToOne(inversedBy: 'asignaturas')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['asignatura:read', 'asignatura:write'])]
+    private ?Curso $curso = null;
 
-    // Getters y Setters
+    #[Groups(['asignatura:read'])]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[Groups(['asignatura:read'])]
     public function getNombre(): ?string
     {
         return $this->nombre;
@@ -45,25 +46,27 @@ class Asinaturas
         return $this;
     }
 
-    public function getHoras(): ?int
+    #[Groups(['asignatura:read'])]
+    public function getHoras(): ?int // Getter for horas
     {
         return $this->horas;
     }
 
-    public function setHoras(?int $horas): static
+    public function setHoras(?int $horas): static // Setter for horas
     {
         $this->horas = $horas;
         return $this;
     }
 
-    public function getCursoId(): ?int
+    #[Groups(['asignatura:read'])]
+    public function getCurso(): ?Curso
     {
-        return $this->cursoId;
+        return $this->curso;
     }
 
-    public function setCursoId(int $cursoId): static
+    public function setCurso(?Curso $curso): static
     {
-        $this->cursoId = $cursoId;
+        $this->curso = $curso;
         return $this;
     }
 }
