@@ -111,7 +111,13 @@ class CursoController extends AbstractController
     {
         $cursos = $cursoRepository->findAll();
         $data = $serializer->serialize($cursos, 'json', ['groups' => 'curso:read']);
-        return new JsonResponse($data, 200, [], true);
+        
+        $response = new JsonResponse($data, 200, [], true);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        
+        return $response;
     }
 
     #[Route('/curso/get-asignaturas', name: 'get_asignaturas', methods: ['GET'])]
