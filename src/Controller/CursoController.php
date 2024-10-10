@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Asinaturas;
+use App\Repository\AsinaturasRepository;
+use App\Repository\CursoRepository;
 use App\Entity\Curso;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CursoController extends AbstractController
 {
@@ -22,31 +24,37 @@ class CursoController extends AbstractController
     }
 
     #[Route('/curso/add-asignatura', name: 'add_asignatura', methods: ['POST'])]
-    public function addAsignatura(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function addAsignatura(Request $request, AsinaturasRepository $asignaturaR, CursoRepository $cR, SerializerInterface $sr): JsonResponse
     {
-        $nombre = $request->request->get('nombre');
-        $horas = $request->request->get('horas');
-        $cursoId = $request->request->get('curso_id');
-
+        $data = json_decode($request->getContent(), true);
+        $nombre = $data['nombre'] ?? null;
+        $horas = $data['horas'] ?? null;
+        $cursoId = $data['curso_id'] ?? null;
+    
         if (!$nombre || !$cursoId) {
             return $this->json(['error' => 'Nombre y curso_id son requeridos'], 400);
         }
-
-        $curso = $entityManager->getRepository(Curso::class)->find($cursoId);
+    
+        $curso = $cR->findOneBy(['id' => $cursoId]);
+    
         if (!$curso) {
             return $this->json(['error' => 'Curso no encontrado'], 404);
         }
-
+    
         $asignatura = new Asinaturas();
         $asignatura->setNombre($nombre);
         $asignatura->setHoras($horas);
         $asignatura->setCurso($curso);
-
-        $entityManager->persist($asignatura);
-        $entityManager->flush();
-
-        return $this->json(['message' => 'Asignatura añadida exitosamente'], 201);
+    
+        $asignaturaR->add($asignatura);
+    
+        // Corregimos el grupo de serialización
+        $data = $sr->serialize($asignatura, 'json', ['groups' => 'asinaturas:read']);
+    
+        // Indicamos que los datos ya están en formato JSON
+        return new JsonResponse($data, 201, [], true);
     }
+    
 
     #[Route('/curso/add-curso', name: 'add_curso', methods: ['POST'])]
     public function addCurso(Request $request, EntityManagerInterface $entityManager): JsonResponse

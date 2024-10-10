@@ -16,6 +16,22 @@ class AsinaturasRepository extends ServiceEntityRepository
         parent::__construct($registry, Asinaturas::class);
     }
 
+
+
+
+    public function add(Asinaturas $asi):void
+    {
+        $this->getEntityManager()->persist($asi);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Asinaturas $asi):void
+    {
+        $this->getEntityManager()->remove($asi);
+        $this->getEntityManager()->flush();
+    }
+
+
     //    /**
     //     * @return Asinaturas[] Returns an array of Asinaturas objects
     //     */

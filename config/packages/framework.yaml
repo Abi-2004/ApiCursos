@@ -9,6 +9,12 @@ framework:
     #esi: true
     #fragments: true
 
+    # Enable the serializer service
+    serializer: { enabled: true }
+
+    # Enable property access for serializing objects (if needed)
+    property_access: { enabled: true }
+
 when@test:
     framework:
         test: true
