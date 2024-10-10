@@ -1,5 +1,0 @@
-cors:
-    paths: '^/curso/'
-    allow_origin: ['*']
-    allow_methods: ['GET', 'POST', 'DELETE', 'OPTIONS']
-    allow_headers: ['Content-Type', 'Authorization']
