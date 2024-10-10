@@ -30,11 +30,13 @@ class Curso
         $this->asignaturas = new ArrayCollection();
     }
 
+    #[Groups(['curso:read'])]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[Groups(['curso:read'])]
     public function getNombre(): ?string
     {
         return $this->nombre;
@@ -49,6 +51,7 @@ class Curso
     /**
      * @return Collection<int, Asinaturas>
      */
+    #[Groups(['curso:read'])]
     public function getAsignaturas(): Collection
     {
         return $this->asignaturas;
