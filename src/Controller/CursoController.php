@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class CursoController extends AbstractController
 {
@@ -113,7 +114,10 @@ class CursoController extends AbstractController
         foreach ($cursos as $curso) {
             $curso->getAsignaturas(); // Ensure 'asignaturas' are loaded
         }
-        $data = $serializer->serialize($cursos, 'json', ['groups' => 'curso:read']);
+        $data = $serializer->serialize($cursos, 'json', [
+            'groups' => 'curso:read',
+            AbstractNormalizer::IGNORED_ATTRIBUTES => ['curso']
+        ]);
         return new JsonResponse($data, 200, [], true);
     }
     
