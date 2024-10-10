@@ -44,7 +44,7 @@ class CursoController extends AbstractController
         $asignatura = new Asinaturas();
         $asignatura->setNombre($nombre);
         $asignatura->setHoras($horas);
-        $asignatura->setCurso($curso);
+        $asignatura->setCursoId($curso->getId());
     
         $asignaturaR->add($asignatura);
     
@@ -125,7 +125,7 @@ class CursoController extends AbstractController
     #[Route('/curso/get-asignaturas-by-curso/{cursoId}', name: 'get_asignaturas_by_curso', methods: ['GET'])]
     public function getAsignaturasByCursoId(int $cursoId, AsinaturasRepository $asignaturasRepository, SerializerInterface $serializer): JsonResponse
     {
-        $asignaturas = $asignaturasRepository->findBy(['curso' => $cursoId]);
+        $asignaturas = $asignaturasRepository->findBy(['cursoId' => $cursoId]);
         $data = $serializer->serialize($asignaturas, 'json', ['groups' => 'asinaturas:read']);
         return new JsonResponse($data, 200, [], true);
     }
