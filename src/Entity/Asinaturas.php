@@ -68,7 +68,12 @@ class Asinaturas
 
     public function setCurso(?Curso $curso): static
     {
-        $this->curso = $curso;
+        if ($this->curso !== $curso) {
+            $this->curso = $curso;
+            if ($curso !== null) {
+                $curso->addAsignatura($this);
+            }
+        }
         return $this;
     }
 }
