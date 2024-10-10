@@ -95,4 +95,18 @@ class CursoController extends AbstractController
 
         return $this->json(['message' => 'Curso eliminado exitosamente'], 200);
     }
+
+    #[Route('/curso/get-cursos', name: 'get_cursos', methods: ['GET'])]
+    public function getCursos(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $cursos = $entityManager->getRepository(Curso::class)->findAll();
+        return $this->json($cursos);
+    }
+
+    #[Route('/curso/get-asignaturas', name: 'get_asignaturas', methods: ['GET'])]
+    public function getAsignaturas(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $asignaturas = $entityManager->getRepository(Asinaturas::class)->findAll();
+        return $this->json($asignaturas);
+    }
 }

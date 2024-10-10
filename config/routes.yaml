@@ -23,3 +23,13 @@ delete_curso:
     path: /curso/delete-curso/{id}
     controller: App\Controller\CursoController::deleteCurso
     methods: DELETE
+
+get_cursos:
+    path: /curso/get-cursos
+    controller: App\Controller\CursoController::getCursos
+    methods: GET
+
+get_asignaturas:
+    path: /curso/get-asignaturas
+    controller: App\Controller\CursoController::getAsignaturas
+    methods: GET
