@@ -57,9 +57,10 @@ class CursoController extends AbstractController
     
 
     #[Route('/curso/add-curso', name: 'add_curso', methods: ['POST'])]
-    public function addCurso(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function addCurso(Request $request, CursoRepository $cursoRepository, SerializerInterface $serializer): JsonResponse
     {
-        $nombre = $request->request->get('nombre');
+        $data = json_decode($request->getContent(), true);
+        $nombre = $data['nombre'] ?? null;
 
         if (!$nombre) {
             return $this->json(['error' => 'Nombre es requerido'], 400);
@@ -68,10 +69,11 @@ class CursoController extends AbstractController
         $curso = new Curso();
         $curso->setNombre($nombre);
 
-        $entityManager->persist($curso);
-        $entityManager->flush();
+        $cursoRepository->add($curso);
 
-        return $this->json(['message' => 'Curso añadido exitosamente'], 201);
+        $data = $serializer->serialize($curso, 'json');
+
+        return new JsonResponse($data, 201, [], true);
     }
 
     #[Route('/curso/delete-asignatura/{id}', name: 'delete_asignatura', methods: ['DELETE'])]
@@ -105,16 +107,18 @@ class CursoController extends AbstractController
     }
 
     #[Route('/curso/get-cursos', name: 'get_cursos', methods: ['GET'])]
-    public function getCursos(EntityManagerInterface $entityManager): JsonResponse
+    public function getCursos(CursoRepository $cursoRepository, SerializerInterface $serializer): JsonResponse
     {
-        $cursos = $entityManager->getRepository(Curso::class)->findAll();
-        return $this->json($cursos);
+        $cursos = $cursoRepository->findAll();
+        $data = $serializer->serialize($cursos, 'json');
+        return new JsonResponse($data, 200, [], true);
     }
 
     #[Route('/curso/get-asignaturas', name: 'get_asignaturas', methods: ['GET'])]
-    public function getAsignaturas(EntityManagerInterface $entityManager): JsonResponse
+    public function getAsignaturas(AsinaturasRepository $asignaturasRepository, SerializerInterface $serializer): JsonResponse
     {
-        $asignaturas = $entityManager->getRepository(Asinaturas::class)->findAll();
-        return $this->json($asignaturas);
+        $asignaturas = $asignaturasRepository->findAll();
+        $data = $serializer->serialize($asignaturas, 'json');
+        return new JsonResponse($data, 200, [], true);
     }
 }
