@@ -25,8 +25,10 @@ class Asinaturas
 
     #[ORM\ManyToOne(targetEntity: Curso::class, inversedBy: 'asignaturas')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['asinaturas:read', 'asinaturas:write'])]
     private ?Curso $curso = null;
+
+    #[Groups(['asinaturas:read'])]
+    private ?int $cursoId = null;
 
     // Getters y Setters
     public function getId(): ?int
@@ -64,6 +66,12 @@ class Asinaturas
     public function setCurso(?Curso $curso): static
     {
         $this->curso = $curso;
+        $this->cursoId = $curso ? $curso->getId() : null;
         return $this;
+    }
+
+    public function getCursoId(): ?int
+    {
+        return $this->cursoId;
     }
 }
