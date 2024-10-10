@@ -3,3 +3,23 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+add_asignatura:
+    path: /curso/add-asignatura
+    controller: App\Controller\CursoController::addAsignatura
+    methods: POST
+
+add_curso:
+    path: /curso/add-curso
+    controller: App\Controller\CursoController::addCurso
+    methods: POST
+
+delete_asignatura:
+    path: /curso/delete-asignatura/{id}
+    controller: App\Controller\CursoController::deleteAsignatura
+    methods: DELETE
+
+delete_curso:
+    path: /curso/delete-curso/{id}
+    controller: App\Controller\CursoController::deleteCurso
+    methods: DELETE
