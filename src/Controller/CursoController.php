@@ -74,7 +74,8 @@ class CursoController extends AbstractController
 
         $data = $serializer->serialize($curso, 'json', ['groups' => 'curso:read']);
 
-        return new JsonResponse($data, 201, [], true);
+        // Redirect to the homepage after adding a curso
+        return $this->redirectToRoute('homepage');
     }
 
     #[Route('/curso/delete-asignatura/{id}', name: 'delete_asignatura', methods: ['DELETE'])]
