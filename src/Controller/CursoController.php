@@ -134,7 +134,7 @@ class CursoController extends AbstractController
     public function getAsignaturasByCursoId(int $cursoId, AsinaturasRepository $asignaturasRepository, SerializerInterface $serializer): JsonResponse
     {
         $asignaturas = $asignaturasRepository->findBy(['curso' => $cursoId]); // Correctly find by 'curso'
-        $data = $serializer->serialize($asignaturas, 'json', ['groups' => 'asinaturas:read']);
+        $data = $serializer->serialize($asignaturas, 'json', ['groups' => 'asignatura:read']);
         return new JsonResponse($data, 200, [], true);
     }
 }
