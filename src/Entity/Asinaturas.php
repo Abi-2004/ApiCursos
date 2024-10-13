@@ -30,7 +30,7 @@ class Asinaturas
     #[MaxDepth(1)]
     private ?Curso $curso = null;
 
-    #[Groups(['asignatura:read'])]
+    #[Groups(['asignatura:read', 'curso_id'])]
     public function getId(): ?int
     {
         return $this->id;
@@ -75,5 +75,11 @@ class Asinaturas
             }
         }
         return $this;
+    }
+
+    #[Groups(['curso_id'])]
+    public function getCursoId(): ?int
+    {
+        return $this->curso ? $this->curso->getId() : null;
     }
 }
