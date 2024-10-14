@@ -75,6 +75,9 @@ class CursoController extends AbstractController
 
         $data = $serializer->serialize($curso, 'json', ['groups' => 'curso:read']);
 
+        // Add console log statement
+        error_log('Datos añadidos: ' . $data);
+
         return new JsonResponse($data, 201, [], true);
     }
 
