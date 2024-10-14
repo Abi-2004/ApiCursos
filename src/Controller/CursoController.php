@@ -64,6 +64,10 @@ class CursoController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $nombre = $data['nombre'] ?? null;
 
+
+        dump($data);
+        dump($nombre);
+
         if (!$nombre) {
             return $this->json(['error' => 'Nombre es requerido'], 400);
         }
