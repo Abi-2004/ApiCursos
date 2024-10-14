@@ -23,7 +23,7 @@ class Curso
     private ?string $nombre = null;
 
     #[ORM\OneToMany(mappedBy: 'curso', targetEntity: Asinaturas::class)]
-    #[Groups(['curso:read', 'curso:write', 'curso:asignaturas'])]
+    #[Groups(['curso:read', 'curso:write', 'curso:asignaturas', 'curso:read'])]
     #[MaxDepth(1)]
     private Collection $asignaturas;
 
